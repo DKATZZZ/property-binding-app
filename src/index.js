@@ -1,17 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import {Child} from './Hello';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+     
+    };
+  }
+  onUpdate = (data) => {
+    this.setState({
+      [data.dataset.state]: data.value
+    })
+  };
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  render() {
+    return (
+      <div>
+        <h2>Parent</h2>
+        Value in Parent Component State fieldVal: {this.state.fieldVal} <br/>
+        {/* Value in Parent Component State otherFieldVal: {this.state.otherFieldVal}
+        <br/> */}
+        <Child onUpdate={this.onUpdate} fieldVal= {this.state.fieldVal} otherFieldVal ={this.state.otherFieldVal}/>
+        <br />
+        {/* <OtherChild passedVal1={this.state.fieldVal} passedVal2={this.state.otherFieldVal}/> */}
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById('root'));
